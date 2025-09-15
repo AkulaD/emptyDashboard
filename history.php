@@ -84,7 +84,9 @@ include 'config.php';
                             <th>JNE</th>
                             <th>JNT Cargo</th>
                             <th>JNE Cargo</th>
+                            <th>Lazada</th>
                             <th>Pos</th>
+                            <th>ID Express</th>
                             <th>Total</th>
                             <th>Status</th>
                             <th>Time</th>
@@ -104,7 +106,7 @@ include 'config.php';
                                 if ($row_date != $current_date) {
                                     $current_date = $row_date;
                                     echo "<tr class='date-row'>
-                                            <td colspan='13'>Date: $current_date</td>
+                                            <td colspan='15'>Date: $current_date</td>
                                           </tr>";
                                     $no = 1; // reset nomor urut per tanggal
                                 }
@@ -119,14 +121,16 @@ include 'config.php';
                                     <td>".$row['jne']."</td>
                                     <td>".$row['jnt_cargo']."</td>
                                     <td>".$row['jne_cargo']."</td>
+                                    <td>".$row['lazada']."</td>
                                     <td>".$row['pos']."</td>
+                                    <td>".$row['id_express']."</td>
                                     <td>".$row['total']."</td>
                                     <td>".$row['status']."</td>
                                     <td class='time-col'>".$row_time."</td>
                                   </tr>";
                             }
                         } else {
-                            echo "<tr><td colspan='13' align='center'>Belum ada data history</td></tr>";
+                            echo "<tr><td colspan='15' align='center'>Belum ada data history</td></tr>";
                         }
                         ?>
                     </tbody>

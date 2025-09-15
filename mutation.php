@@ -12,7 +12,9 @@ $sql = "SELECT
             SUM(jne) AS total_jne,
             SUM(jnt_cargo) AS total_jnt_cargo,
             SUM(jne_cargo) AS total_jne_cargo,
+            SUM(lazada) AS total_lazada,
             SUM(pos) AS total_pos,
+            SUM(id_express) AS total_id_express,
             SUM(total) AS total_all
         FROM shipments
         GROUP BY shipment_date
@@ -56,7 +58,9 @@ $result = $conn->query($sql);
                             <th>Total JNE</th>
                             <th>Total JNT Cargo</th>
                             <th>Total JNE Cargo</th>
+                            <th>Total Lazada</th>
                             <th>Total Pos</th>
+                            <th>Total ID Express</th>
                             <th>Total All</th>
                             <th>Download Excel</th>
                         </tr>
@@ -74,9 +78,11 @@ $result = $conn->query($sql);
                                     <td><?= $row['total_jne'] ?></td>
                                     <td><?= $row['total_jnt_cargo'] ?></td>
                                     <td><?= $row['total_jne_cargo'] ?></td>
+                                    <td><?= $row['total_lazada'] ?></td>
                                     <td><?= $row['total_pos'] ?></td>
+                                    <td><?= $row['total_id_express'] ?></td>
                                     <td><?= $row['total_all'] ?></td>
-                                    <td><a href="downloadMutation.php"><button class="btnDownload">Download</button></a></td>
+                                    <td><a href="downloadMutation.php?date=<?= $row['shipment_date'] ?>"><button class="btnDownload">Download</button></a></td>
                                 </tr>
                             <?php endwhile; ?>
                         <?php else: ?>

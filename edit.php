@@ -30,10 +30,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $jne       = intval($_POST['jne']);
     $jnt_cargo = intval($_POST['jnt_cargo']);
     $jne_cargo = intval($_POST['jne_cargo']);
+    $lazada    = intval($_POST['lazada']);
     $pos       = intval($_POST['pos']);
+    $id_express= intval($_POST['id_express']);
 
     // hitung total baru (untuk history, bukan untuk update shipments)
-    $total = $spx + $anter + $sicepat + $jnt + $jne + $jnt_cargo + $jne_cargo + $pos;
+    $total = $spx + $anter + $sicepat + $jnt + $jne + $jnt_cargo + $jne_cargo + $lazada + $pos + $id_express;
 
     // update shipments (tanpa kolom total karena itu generated column)
     $update = "UPDATE shipments SET 
@@ -44,7 +46,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 jne = $jne, 
                 jnt_cargo = $jnt_cargo, 
                 jne_cargo = $jne_cargo, 
-                pos = $pos
+                lazada = $lazada, 
+                pos = $pos,
+                id_express = $id_express
                 WHERE id = $id";
 
     if ($conn->query($update)) {
@@ -53,9 +57,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $shipment_id = $id;
         $customer_id = $data['customer_id'];
         $sql_history = "INSERT INTO history 
-            (shipment_id, customer_id, spx, anter, sicepat, jnt, jne, jnt_cargo, jne_cargo, pos, total, status, history_date)
+            (shipment_id, customer_id, spx, anter, sicepat, jnt, jne, jnt_cargo, jne_cargo, lazada, pos, id_express, total, status, history_date)
             VALUES
-            ($shipment_id, $customer_id, $spx, $anter, $sicepat, $jnt, $jne, $jnt_cargo, $jne_cargo, $pos, $total, 'Edit', NOW())";
+            ($shipment_id, $customer_id, $spx, $anter, $sicepat, $jnt, $jne, $jnt_cargo, $jne_cargo, $lazada, $pos, $id_express, $total, 'Edit', NOW())";
 
         $conn->query($sql_history); // jika error di history, tetap lanjut
 
@@ -81,7 +85,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <label>JNE: <input type="number" name="jne" value="<?php echo $data['jne']; ?>"></label><br><br>
             <label>JNT Cargo: <input type="number" name="jnt_cargo" value="<?php echo $data['jnt_cargo']; ?>"></label><br><br>
             <label>JNE Cargo: <input type="number" name="jne_cargo" value="<?php echo $data['jne_cargo']; ?>"></label><br><br>
+            <label>Lazada: <input type="number" name="lazada" value="<?php echo $data['lazada']; ?>"></label><br><br>
             <label>Pos: <input type="number" name="pos" value="<?php echo $data['pos']; ?>"></label><br><br>
+            <label>ID Express: <input type="number" name="id_express" value="<?php echo $data['id_express']; ?>"></label><br><br>
 
             <button type="submit">Simpan</button>
         </form>

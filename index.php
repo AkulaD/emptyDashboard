@@ -55,8 +55,14 @@ include 'config.php';
                     <label>JNE Cargo:</label>
                     <input type="number" name="jnecargo" placeholder="Masukkan jumlah">
 
+                    <label>Lazada:</label>
+                    <input type="number" name="lazada" placeholder="Masukkan jumlah">
+
                     <label>Pos:</label>
                     <input type="number" name="pos" placeholder="Masukkan jumlah">
+
+                    <label>ID Express:</label>
+                    <input type="number" name="id_express" placeholder="Masukkan jumlah">
 
                     <button type="submit">Simpan</button>
                 </form>
@@ -80,7 +86,9 @@ include 'config.php';
                             <th>JNE</th>
                             <th>JNT Cargo</th>
                             <th>JNE Cargo</th>
+                            <th>Lazada</th>
                             <th>Pos</th>
+                            <th>ID Express</th>
                             <th>Total</th>
                             <th>Option</th>
                         </tr>
@@ -91,7 +99,7 @@ include 'config.php';
                         $sql = "SELECT s.id, c.customer_name, 
                                 s.spx, s.anter, s.sicepat, 
                                 s.jnt, s.jne, s.jnt_cargo, 
-                                s.jne_cargo, s.pos, s.total
+                                s.jne_cargo, s.lazada, s.pos, s.id_express, s.total
                                 FROM shipments s 
                                 JOIN customers c ON s.customer_id = c.id
                                 WHERE s.shipment_date = CURDATE()";
@@ -106,7 +114,7 @@ include 'config.php';
                         $no = 1;
                         $totals = [
                             "spx"=>0, "anter"=>0, "sicepat"=>0, "jnt"=>0, "jne"=>0,
-                            "jnt_cargo"=>0, "jne_cargo"=>0, "pos"=>0, "total"=>0
+                            "jnt_cargo"=>0, "jne_cargo"=>0, "lazada"=>0, "pos"=>0, "id_express"=>0, "total"=>0
                         ];
 
                         if ($result->num_rows > 0) {
@@ -121,7 +129,9 @@ include 'config.php';
                                     <td>".$row['jne']."</td>
                                     <td>".$row['jnt_cargo']."</td>
                                     <td>".$row['jne_cargo']."</td>
+                                    <td>".$row['lazada']."</td>
                                     <td>".$row['pos']."</td>
+                                    <td>".$row['id_express']."</td>
                                     <td>".$row['total']."</td>
                                     <td>
                                         <a href='edit.php?id=".$row['id']."'>Edit</a> | 
@@ -138,7 +148,9 @@ include 'config.php';
                                 $totals['jne']       += $row['jne'];
                                 $totals['jnt_cargo'] += $row['jnt_cargo'];
                                 $totals['jne_cargo'] += $row['jne_cargo'];
+                                $totals['lazada']    += $row['lazada'];
                                 $totals['pos']       += $row['pos'];
+                                $totals['id_express']+= $row['id_express'];
                                 $totals['total']     += $row['total'];
                             }
                         } else {
@@ -156,7 +168,9 @@ include 'config.php';
                             <td><?php echo $totals['jne']; ?></td>
                             <td><?php echo $totals['jnt_cargo']; ?></td>
                             <td><?php echo $totals['jne_cargo']; ?></td>
+                            <td><?php echo $totals['lazada']; ?></td>
                             <td><?php echo $totals['pos']; ?></td>
+                            <td><?php echo $totals['id_express']; ?></td>
                             <td><?php echo $totals['total']; ?></td>
                             <td>-</td>
                         </tr>
