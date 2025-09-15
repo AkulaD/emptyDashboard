@@ -1,7 +1,7 @@
 <?php 
 $db = "localhost";
-$dbuser = "paketuser";
-$dbpass = "Paket@1234";
+$dbuser = "root";
+$dbpass = "";
 $dbname = "paketempty";
 
 $conn = new mysqli($db, $dbuser, $dbpass, $dbname);
