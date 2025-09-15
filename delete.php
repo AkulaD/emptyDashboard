@@ -1,6 +1,11 @@
 <?php
 include "config.php"; // koneksi ke database
 
+// aktifkan error reporting supaya kalau ada error tidak hanya HTTP 500
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 // Cek apakah id ada
 if (!isset($_GET['id'])) {
     die("ID tidak ditemukan!");
@@ -21,10 +26,13 @@ if (!$shipment) {
 }
 
 // Simpan data ke tabel history dengan status Delete
-$sql_insert_history = "INSERT INTO history 
-    (shipment_id, customer_id, spx, anter, sicepat, jnt, jne, jnt_cargo, jne_cargo, lazada, pos, id_express, total, status) 
+$sql_insert_history = "INSERT INTO history
+    (shipment_id, customer_id, spx, anter, sicepat, jnt, jne, jnt_cargo, jne_cargo, lazada, pos, id_express, total, status)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'Delete')";
+
 $stmt_insert = $conn->prepare($sql_insert_history);
+
+// cek tipe kolom total, kalau INT pakai "i", kalau DECIMAL/DOUBLE pakai "d"
 $stmt_insert->bind_param(
     "iiiiiiiiiiiii",
     $shipment['id'],
@@ -39,7 +47,7 @@ $stmt_insert->bind_param(
     $shipment['lazada'],
     $shipment['pos'],
     $shipment['id_express'],
-    $shipment['total']
+    $shipment['total'] // ganti "d" kalau tipe kolom ini decimal/double
 );
 $stmt_insert->execute();
 
